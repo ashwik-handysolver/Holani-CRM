@@ -1,0 +1,12 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+data/
+
+# Google service account key (Google Drive import) - never commit this
+google-service-account*.json

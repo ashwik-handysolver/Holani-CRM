@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  --surface: #ffffff;
+  --canvas: #f6f7f9;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --ink: #0f172a;
+  --accent: #f59e0b;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+
+  /* Chart colours (validated categorical order: blue, orange, aqua, yellow) */
+  --viz-1: #2a78d6;
+  --viz-2: #eb6834;
+  --viz-3: #1baf7a;
+  --viz-4: #eda100;
+  --viz-seq: #2a78d6;
+  --status-good: #1baf7a;
+  --status-neutral: #a3a3a3;
+  --status-bad: #e34948;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  body {
+    @apply min-h-screen font-sans;
+    background-color: var(--canvas);
+    color: var(--ink);
+  }
+  button, a, input, select, textarea {
+    @apply outline-none;
+  }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    box-shadow: 0 0 0 2px var(--canvas), 0 0 0 4px rgba(245, 158, 11, 0.6);
+  }
+  ::selection {
+    background: rgba(245, 158, 11, 0.25);
+  }
+}
+
+/* Panels & cards */
+.glass-3d-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-3d-card,
+.ref-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ref-card {
+  border-radius: 1rem;
+}
+
+.glass-3d-card:hover,
+.ref-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* Buttons */
+.btn-3d-primary, .btn-3d-amber, .btn-3d-purple {
+  background: var(--ink);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-3d-primary:hover, .btn-3d-amber:hover, .btn-3d-purple:hover {
+  background: #1e293b;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-3d-slate {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-3d-slate:hover {
+  background: #f9fafb;
+  border-color: var(--border-strong);
+}
+
+/* View entrance */
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.view-enter {
+  animation: view-in 0.25s ease-out;
+}
+/* Word documents shown in the document viewer */
+.doc-page { color: var(--color-slate-800); font-size: 15px; line-height: 1.7; }
+.doc-page h1 { font-size: 1.6em; font-weight: 700; margin: 0.2em 0 0.6em; color: var(--color-slate-900); }
+.doc-page h2 { font-size: 1.3em; font-weight: 650; margin: 1.4em 0 0.5em; color: var(--color-slate-900); }
+.doc-page h3, .doc-page h4 { font-size: 1.1em; font-weight: 600; margin: 1.2em 0 0.4em; color: var(--color-slate-900); }
+.doc-page p { margin: 0 0 0.9em; }
+.doc-page ul, .doc-page ol { margin: 0 0 0.9em 1.4em; }
+.doc-page ul { list-style: disc; }
+.doc-page ol { list-style: decimal; }
+.doc-page li { margin: 0.2em 0; }
+.doc-page a { color: var(--color-amber-600); text-decoration: underline; }
+.doc-page table { border-collapse: collapse; margin: 0 0 1em; width: 100%; font-size: 0.92em; }
+.doc-page td, .doc-page th { border: 1px solid var(--color-slate-200); padding: 6px 10px; vertical-align: top; }
+.doc-page img { max-width: 100%; height: auto; }
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.dropdown-in {
+  animation: dropdown-in 0.14s ease-out;
+  transform-origin: top;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-in { animation: none; }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.toast-in {
+  animation: toast-in 0.25s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .view-enter, .toast-in { animation: none; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 9999px;
+  border: 2px solid var(--canvas);
+}
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* ---------- Dark mode ----------
+   Tailwind v4 reads colours from CSS variables, so dark mode swaps the
+   palette here instead of adding dark: classes to every component. */
+html.dark {
+  color-scheme: dark;
+  --canvas: #070b14;
+  --surface: #0f1522;
+  --border: #243044;
+  --border-strong: #334155;
+  --ink: #e2e8f0;
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+
+  --viz-1: #3987e5;
+  --viz-2: #d95926;
+  --viz-3: #199e70;
+  --viz-4: #c98500;
+  --viz-seq: #3987e5;
+  --status-good: #199e70;
+  --status-neutral: #6b7280;
+  --status-bad: #e66767;
+
+  --color-white: #0f1522;
+  --color-slate-50: #151d2c;
+  --color-slate-100: #1b2435;
+  --color-slate-200: #243044;
+  --color-slate-300: #334155;
+  --color-slate-400: #64748b;
+  --color-slate-500: #94a3b8;
+  --color-slate-600: #b6c2d3;
+  --color-slate-700: #cbd5e1;
+  --color-slate-800: #e2e8f0;
+  --color-slate-900: #f1f5f9;
+  --color-slate-950: #f8fafc;
+
+  --color-emerald-50: rgb(16 185 129 / 0.14);
+  --color-emerald-600: #34d399;
+  --color-emerald-700: #6ee7b7;
+  --color-rose-50: rgb(244 63 94 / 0.14);
+  --color-rose-600: #fb7185;
+  --color-rose-700: #fda4af;
+  --color-amber-50: rgb(245 158 11 / 0.14);
+  --color-amber-600: #fbbf24;
+  --color-amber-700: #fcd34d;
+  --color-amber-800: #fcd34d;
+  --color-sky-50: rgb(14 165 233 / 0.14);
+  --color-sky-600: #38bdf8;
+  --color-sky-700: #7dd3fc;
+  --color-violet-50: rgb(139 92 246 / 0.16);
+  --color-violet-700: #c4b5fd;
+}
+
+/* Dark text stays dark on amber backgrounds. */
+html.dark .bg-amber-400 {
+  --color-slate-950: #020617;
+}
+
+html.dark ::-webkit-scrollbar-thumb { background: #334155; }
